@@ -1,0 +1,8 @@
+This directory contains two files: a py file and a csv file.
+
+The file MCBPO_data is a python script that parses the uniprot database and classifies the proteins by function.
+Each entry in the UniProt database is parsed, and then an attempt to classify it according to its function (searching for keywords) is done.
+If the classification attempt is successfull, the information of the protein is saved (accession number, ID, name, sequence, sequence length, species, gene, subcellular location, biological processes, biological function).
+This classification could be improved by giving weights to the different terms, considering term combinations and using machine learning methods to achieve a better classification.
+
+The file uniprot_sample is a csv file with a fraction of the classified proteins, which will be the ones used to construct the ontology. Only 2000 proteins were used to keep the ontology small and easy to drive, but the addition of all the classified terms would be automatic.
