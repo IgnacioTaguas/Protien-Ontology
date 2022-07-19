@@ -1,0 +1,210 @@
+#!/bin/bash
+
+file=$1
+
+touch prots_RDF.txt
+
+lines=$(cat $file | wc -l)
+
+for num in $(seq 1 $lines); do
+	echo $num
+
+	protac=$(cat $file | head -$num | tail -1 | cut -f1)
+	protac=${protac#\"}
+	protac=${protac%\"}
+	
+    echo '	<!-- http://purl.uniprot.org/uniprot/'$protac '-->' >> prots_RDF.txt
+	echo >> prots_RDF.txt
+    echo '	<owl:NamedIndividual rdf:about="http://purl.uniprot.org/uniprot/'$protac'">' >> prots_RDF.txt
+	echo '        <hasAccessionNumber>'$protac'</hasAccessionNumber>' >> prots_RDF.txt
+	
+	class=$(cat $file | head -$num | tail -1 | cut -f22)
+	class=${class#\"}
+	class=${class%\"}
+	
+	echo '		<rdf:type rdf:resource="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#'$class'"/>' >> prots_RDF.txt
+
+	funid1=$(cat $file | head -$num | tail -1 | cut -f10)
+	funid1=${funid1#\"}
+	funid1=${funid1%\"}
+	if test -z $funid1
+	then
+		echo
+	else
+		echo '        <hasFunction rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$funid1'"/>' >> prots_RDF.txt
+	fi
+
+	funid2=$(cat $file | head -$num | tail -1 | cut -f12)
+	funid2=${funid2#\"}
+	funid2=${funid2%\"}
+	if test -z $funid2
+	then
+		echo
+	else
+		echo '        <hasFunction rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$funid2'"/>' >> prots_RDF.txt
+	fi
+	
+	funid3=$(cat $file | head -$num | tail -1 | cut -f14)
+	funid3=${funid3#\"}
+	funid3=${funid3%\"}
+	if test -z $funid3
+	then
+		echo
+	else
+		echo '        <hasFunction rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$funid3'"/>' >> prots_RDF.txt
+	fi
+
+	echo '        <hasLength rdf:resource="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#'$protac'Length"/>' >> prots_RDF.txt
+	
+	geneid=$(cat $file | head -$num | tail -1 | cut -f25)
+	geneid=${geneid#\"}
+	geneid=${geneid%\"}
+	if test -z $geneid
+	then
+		echo
+	else
+		echo '        <isCodedByGene rdf:resource="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO/'$geneid'"/>' >> prots_RDF.txt
+	fi
+	
+	orgid=$(cat $file | head -$num | tail -1 | cut -f27)
+	orgid=${orgid#\"}
+	orgid=${orgid%\"}
+	if test -z $orgid
+	then
+		echo
+	else
+		echo '        <isFromSpecies rdf:resource="http://www.uniprot.org/taxonomy/'$orgid'"/>' >> prots_RDF.txt
+	fi
+	
+	locid1=$(cat $file | head -$num | tail -1 | cut -f4)
+	locid1=${locid1#\"}
+	locid1=${locid1%\"}
+	if test -z $locid1
+	then
+		echo
+	else
+		echo '        <isInLocation rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$locid1'"/>' >> prots_RDF.txt
+	fi
+	
+	locid2=$(cat $file | head -$num | tail -1 | cut -f6)
+	locid2=${locid2#\"}
+	locid2=${locid2%\"}
+	if test -z $locid2
+	then
+		echo
+	else
+		echo '        <isInLocation rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$locid2'"/>' >> prots_RDF.txt
+	fi
+
+	locid3=$(cat $file | head -$num | tail -1 | cut -f8)
+	locid3=${locid3#\"}
+	locid3=${locid3%\"}
+	if test -z $locid3
+	then
+		echo
+	else
+		echo '        <isInLocation rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$locid3'"/>' >> prots_RDF.txt
+	fi
+	
+	proid1=$(cat $file | head -$num | tail -1 | cut -f16)
+	proid1=${proid1#\"}
+	proid1=${proid1%\"}
+	if test -z $proid1
+	then
+		echo
+	else
+		echo '        <isInvolvedIn rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$proid1'"/>' >> prots_RDF.txt
+	fi
+	
+	proid2=$(cat $file | head -$num | tail -1 | cut -f18)
+	proid2=${proid2#\"}
+	proid2=${proid2%\"}
+	if test -z $proid2
+	then
+		echo
+	else
+		echo '        <isInvolvedIn rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$proid2'"/>' >> prots_RDF.txt
+	fi
+	
+	proid3=$(cat $file | head -$num | tail -1 | cut -f20)
+	proid3=${proid3#\"}
+	proid3=${proid3%\"}
+	if test -z $proid3
+	then
+		echo
+	else
+		echo '        <isInvolvedIn rdf:resource="https://www.ebi.ac.uk/QuickGO/term/'$proid3'"/>' >> prots_RDF.txt
+	fi
+	
+	protid=$(cat $file | head -$num | tail -1 | cut -f2)
+	protid=${protid#\"}
+	protid=${protid%\"}
+	if test -z $protid
+	then
+		echo
+	else
+		echo '        <hasProtID>'$protid'</hasProtID>' >> prots_RDF.txt
+	fi
+	
+	protname=$(cat $file | head -$num | tail -1 | cut -f3)
+	protname=${protname#\"}
+	protname=${protname%\"}
+	if test -z "$protname"
+	then
+		echo
+	else
+		echo '        <hasProtName>'$protname'</hasProtName>' >> prots_RDF.txt
+	fi
+	
+	seq=$(cat $file | head -$num | tail -1 | cut -f24)
+	seq=${seq#\"}
+	seq=${seq%\"}
+	if test -z $seq
+	then
+		echo
+	else
+		echo '        <hasSequence>'$seq'</hasSequence>' >> prots_RDF.txt
+	fi
+	
+	same=$(cat $file | head -$num | tail -1 | cut -f29)
+	same=${same#\"}
+	same=${same%\"}
+	if !(test -z $same)
+	then
+		array=(${same//_/ })
+		len=${#array[*]}
+		for j in $(seq 1 $len); do
+			sprot=$(echo ${array[$j-1]})
+			echo '		<isSameProteinAs rdf:resource="http://purl.uniprot.org/uniprot/'$sprot'"/>' >> prots_RDF.txt
+		done
+	fi
+	
+	echo '    </owl:NamedIndividual>' >> prots_RDF.txt
+	
+	echo >> prots_RDF.txt
+	echo >> prots_RDF.txt
+	echo >> prots_RDF.txt
+	
+	echo '    <!-- http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#'$protac'Length -->' >> prots_RDF.txt
+	
+	echo >> prots_RDF.txt
+	
+	echo '    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#'$protac'Length">' >> prots_RDF.txt
+	
+	echo '        <rdf:type rdf:resource="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#LengthProperty"/>' >> prots_RDF.txt
+	
+	echo '        <hasLengthUnit>amino acids</hasLengthUnit>' >> prots_RDF.txt
+
+	len=$(cat $file | head -$num | tail -1 | cut -f23)
+	len=${len#\"}
+	len=${len%\"}
+	if test -z $len
+	then
+		echo
+	else
+		echo '        <hasLengthValue rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">'$len'</hasLengthValue>' >> prots_RDF.txt
+	fi
+	
+	echo '    </owl:NamedIndividual>' >> prots_RDF.txt
+
+done

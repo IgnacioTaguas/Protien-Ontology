@@ -1,0 +1,25 @@
+#!/bin/bash
+
+file=$1
+
+touch file.txt
+
+cat $file | while read p; do
+	go=$(echo $p | grep -o '^\S*')
+	go=${go#\"}
+	go=${go%\"}
+	name=$(echo $p | grep -o '\s.*')
+	name=$(echo ${name//$'\t'/})
+	name=${name#\"}
+	name=${name%\"}
+	echo '    <!-- http://geneontology.org/go#'$go '-->' >> file.txt
+	echo >> file.txt
+	echo '    <owl:NamedIndividual rdf:about="https://www.ebi.ac.uk/QuickGO/term/'$go'">' >> file.txt
+	echo '        <rdf:type rdf:resource="http://purl.obolibrary.org/obo/NCIT_C13282"/>' >> file.txt
+	echo '        <MCBPO:hasLocationID>'$go'</MCBPO:hasLocationID>' >> file.txt
+	echo '        <hasLocationName>'$name'</hasLocationName>' >> file.txt
+	echo '    </owl:NamedIndividual>' >> file.txt
+	echo >> file.txt
+	echo >> file.txt
+	echo >> file.txt
+done

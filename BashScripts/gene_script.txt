@@ -1,0 +1,45 @@
+#!/bin/bash
+
+file=$1
+
+touch file.txt
+
+cat $file | while read p; do
+	array=(${p// / })
+	len=${#array[*]}
+	for i in $(seq 1 $len); do
+		go=$(echo ${array[$i-1]})
+		go=${go#\"}
+		go=${go%\"}
+		if [ $i -eq 1 ]
+		then
+			echo '    <!-- http://www.semanticweb.org/a/ontologies/2020/0/MCBPO#'$go '-->' >> file.txt
+			echo >> file.txt
+			echo '    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO/'$go'">' >> file.txt
+			echo '        <rdf:type rdf:resource="http://purl.obolibrary.org/obo/NCIT_C16612"/>' >> file.txt
+			echo '        <MCBPO:hasGeneID>'$go'</MCBPO:hasGeneID>' >> file.txt
+		elif [ $i -eq 2 ]
+		then
+			if [[ "$go" == NULL ]]
+			then
+				echo
+			else
+				echo '        <hasGeneName>'$go'</hasGeneName>' >> file.txt
+			fi
+		else
+			if !(test -z $go)
+			then
+				array2=(${go//_/ })
+				len2=${#array2[*]}
+				for j in $(seq 1 $len2); do
+					gene=$(echo ${array2[$j-1]})
+					echo '		<MCBPO:isSameGeneAs rdf:resource="http://www.semanticweb.org/a/ontologies/2020/0/MCBPO/'$gene'"/>' >> file.txt
+				done
+			fi
+		fi
+	done
+	echo '    </owl:NamedIndividual>' >> file.txt
+	echo >> file.txt
+	echo >> file.txt
+	echo >> file.txt
+done
