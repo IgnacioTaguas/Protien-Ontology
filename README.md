@@ -10,4 +10,10 @@ The UniProt and GO databases were parsed using Python, which was also used to cl
 For the ontology validation three tools were used: OOPS! and HermiT, which are ontologies' reasoners, and RDFlib, which is a Python package working with RDF with a SPARQL implementation. In this way, several SPARQL queries were resolved.
 
 This repository has the following files and directories:
-  - 
+  - MCBPO: a detailed written report of the project's construction, validation, future implementation...
+  - OntologyScheme: an image with the ontology scheme.
+  - ClassScripts: directory with bash scripts used to create the instances of the ontology.
+  - DatabaseCreation: directory with the Python script used to parse the UniProt database and classify proteins, and the resulting csv file used to create instances.
+  - Documentation: directory with the documentation of the ontology.
+  - Ontology: directory with the OWL ontology.
+  - QueriesSQL: directory with the Python script that answers different competency questions (SQL format).
