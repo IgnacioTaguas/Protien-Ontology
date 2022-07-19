@@ -1,0 +1,24 @@
+MCBPO_queries is a Python file that contains several SQL competency questions, as a validation of the ontology.
+
+The questions include:
+  - Number of protein classes/proteins/genes/species/locations/functions/processes
+  - License
+  - URI for a given class name
+  - URI, name and ID for a protein accession number
+  - URI and name for a gene/species/subcellular location/biological function/biological process ID
+  - What class of protein does a given protein belong to?
+  - What gene codifies for a given protein?
+  - Which are the cellular locations of a given protein?
+  - Which are the biological functions that a given protein carries out?
+  - Which are the biological proceses in which a given protein is involved?
+  - What is the length and unit of measure of a given protein?
+  - Which proteins are coded by a given gene?
+  - Which proteins appear in a given cellular location?
+  - Which proteins have a given biological function?
+  - Which proteins are involved in a given biological process?
+  - Which proteins have the same name as a given protein?
+  - Which genes have the same name as a given gene?
+  - Which cellular locations are shared by two given proteins?
+  - Which biological functions are shared by two given proteins?
+  - Which biological processes are shared by two given proteins?
+  
